@@ -220,7 +220,8 @@ struct HistoriaView: View {
             titulo: "Historia",
             simbolo: "book.closed",
             imagenes: ["BTSorigen", "BTSHistoria", "FotoGrupal"],
-            contenido:"BTS empezó en 2010 cuando Bang Si-hyuk, de Big Hit Entertainment, quería armar un grupo de hip hop. El primero en llegar fue RM y poco a poco se fueron uniendo los demás hasta quedar 7.\n\nDebutaron el 13 de junio de 2013 con la canción \"No More Dream\" del álbum 2 Cool 4 Skool. Su nombre viene de \"Bangtan Sonyeondan\" que significa algo como \"Boy Scouts a prueba de balas\", porque querían proteger a los jóvenes de los prejuicios. Después también dijeron que significa \"Beyond The Scene\".\n\nAl principio eran una empresa pequeña y no les iba tan bien, pero con eras como \"The Most Beautiful Moment in Life\", \"Wings\", \"Love Yourself\" y \"Map of the Soul\" se hicieron famosos en todo el mundo. En 2020 llegó \"Dynamite\", su primer #1 en Billboard.\n\nDe 2022 a 2025 hicieron su servicio militar y en 2026 regresaron los 7 juntos con el álbum ARIRANG.")
+            contenido:"BTS empezó en 2010 cuando Bang Si-hyuk, de Big Hit Entertainment, quería armar un grupo de hip hop. El primero en llegar fue RM y poco a poco se fueron uniendo los demás hasta quedar 7.\n\nDebutaron el 13 de junio de 2013 con la canción \"No More Dream\" del álbum 2 Cool 4 Skool. Su nombre viene de \"Bangtan Sonyeondan\" que significa algo como \"Boy Scouts a prueba de balas\", porque querían proteger a los jóvenes de los prejuicios. Después también dijeron que significa \"Beyond The Scene\".\n\nAl principio eran una empresa pequeña y no les iba tan bien, pero con eras como \"The Most Beautiful Moment in Life\", \"Wings\", \"Love Yourself\" y \"Map of the Soul\" se hicieron famosos en todo el mundo. En 2020 llegó \"Dynamite\", su primer #1 en Billboard.\n\nDe 2022 a 2025 hicieron su servicio militar y en 2026 regresaron los 7 juntos con el álbum ARIRANG.",
+            siguiente: "Integrantes")
     }
 }
 
@@ -251,7 +252,7 @@ let integrantes = [
 
 struct IntegrantesView: View {
     @Binding var ruta: [String]
-    @State private var actual = 0
+    @State var actual = 0
 
     var body: some View {
         let miembro = integrantes[actual]
@@ -338,7 +339,7 @@ struct TourView: View {
 
 struct MexicoView: View {
     @Binding var ruta: [String]
-    private let coordenada = CLLocationCoordinate2D(latitude: 19.4326, longitude: -99.1332)
+    let coordenada = CLLocationCoordinate2D(latitude: 19.4326, longitude: -99.1332)
 
     var body: some View {
         ScrollView{
