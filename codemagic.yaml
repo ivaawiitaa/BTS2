@@ -1,0 +1,41 @@
+# Codemagic: compila la app de BTS para simulador de iOS
+# y genera un .zip listo para subir a appetize.io
+workflows:
+  bts-appetize:
+    name: BTS App - Simulador para Appetize
+    instance_type: mac_mini_m2
+    max_build_duration: 30
+    environment:
+      xcode: latest
+    scripts:
+      - name: Compilar para simulador (sin firma)
+        script: |
+          PROYECTO=$(find . -maxdepth 3 -name "*.xcodeproj" | head -n 1)
+          echo "Proyecto: $PROYECTO"
+          xcodebuild \
+            -project "$PROYECTO" \
+            -target PuebloMagico \
+            -sdk iphonesimulator \
+            -configuration Debug \
+            SYMROOT="$CM_BUILD_DIR/build" \
+            ARCHS="arm64 x86_64" \
+            ONLY_ACTIVE_ARCH=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+      - name: Comprimir .app para Appetize
+        script: |
+          cd "$CM_BUILD_DIR/build/Debug-iphonesimulator"
+          zip -r "$CM_BUILD_DIR/BTSApp.zip" PuebloMagico.app
+      - name: Subir a Appetize (opcional)
+        script: |
+          # Agrega la variable APPETIZE_API_TOKEN en Codemagic si quieres que se suba solo
+          if [ -n "$APPETIZE_API_TOKEN" ]; then
+            curl -X POST https://api.appetize.io/v1/apps \
+              -H "X-API-KEY: $APPETIZE_API_TOKEN" \
+              -F "file=@$CM_BUILD_DIR/BTSApp.zip" \
+              -F "platform=ios"
+          else
+            echo "No hay APPETIZE_API_TOKEN, descarga BTSApp.zip y súbelo a appetize.io"
+          fi
+    artifacts:
+      - BTSApp.zip
